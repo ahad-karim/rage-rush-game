@@ -405,6 +405,15 @@ void iDraw() {
     // Label
     iSetColor(255, 255, 255);
     iText(meterX, meterY + meterH + 5 * rh, "RAGE", GLUT_BITMAP_HELVETICA_18);
+
+    // ========== BACK BUTTON (top-left) ==========
+    double backW = 70 * rw;
+    double backH = 40 * rh;
+    double backX = 15 * rw;
+    double backY = screenHeight - backH - 15 * rh;
+    bool backHov = (mouseX >= backX && mouseX <= backX + backW &&
+                    mouseY >= backY && mouseY <= backY + backH);
+    iShowImage(backX, backY, backW, backH, backHov ? backHovered : backDefault);
   }
 
   // ... WIN and GAME_OVER states ...
@@ -839,8 +848,14 @@ void iMouse(int button, int state, int mx, int my) {
         currentGameState = STATE_MAIN_MENU;
       }
     } else if (currentGameState == STATE_GAMEPLAY) {
-      // Temporary
-      currentGameState = STATE_MAIN_MENU;
+      // Only return to menu if the back button (top-left) was clicked
+      double backW = 70 * rw;
+      double backH = 40 * rh;
+      double backX = 15 * rw;
+      double backY = screenHeight - backH - 15 * rh;
+      if (mx >= backX && mx <= backX + backW && my >= backY && my <= backY + backH) {
+        currentGameState = STATE_MAIN_MENU;
+      }
     } else if (currentGameState == STATE_WIN) {
       currentGameState = STATE_MAIN_MENU;
     } else if (currentGameState == STATE_GAME_OVER) {

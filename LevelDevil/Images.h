@@ -25,6 +25,7 @@ int l4bg[4];
 int l5bg[4];
 int orbImg, shieldImg;
 int intro1, intro2, intro3, intro4; // Story / win images
+int backDefault, backHovered;        // Back button (in-game)
 
 int objImg[8] = {
     spikes1,  door,     platform,
@@ -68,6 +69,9 @@ void initImages() {
 
   win = iLoadImage("Images//win.png");
   gameover = iLoadImage("Images//gameover.jpg");
+
+  backDefault = iLoadImage("Images//backDefault.png");
+  backHovered = iLoadImage("Images//backHovered.png");
 
   l1bg[0] = iLoadImage("Images//l1s1bg.png");
   l1bg[1] = iLoadImage("Images//l1s2bg.png");
