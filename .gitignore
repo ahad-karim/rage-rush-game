@@ -1,0 +1,41 @@
+## Visual Studio 2013+ Specifics
+*.suo
+*.v12.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+## Visual Studio IntelliSense/Database files
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+ipch/
+
+## Build Results (Directories)
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bin/
+obj/
+
+## Build Results (Files)
+# These are generated during the build process and shouldn't be tracked
+*.obj
+*.ilk
+*.pdb
+*.tlog
+*.idb
+*.aps
+*.pch
+*.res
+*.exe
+*.dll
+*.lib
+
+## Test Results
+TestResults/
