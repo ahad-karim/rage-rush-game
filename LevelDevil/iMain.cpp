@@ -1130,97 +1130,99 @@ void fixedUpdate() {
     }
   }
 
-  if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
-      isKeyPressed(' ')) {
-    jumpStart = true;
-
-    if (imageLoop == 9) {
-      imageLoop = 0;
-    } else {
-      imageLoop++;
-    }
-
-    if (isLeft) {
-      currentImage = characterLeftJumpArray[5];
-      updatePlayerPhysics(hero, isLeft);
-    } else {
-      currentImage = rightjump3;
-      updatePlayerPhysics(hero, isLeft);
-    }
-  }
-  if (isKeyPressed('a') || isSpecialKeyPressed(GLUT_KEY_LEFT)) {
-    isLeft = true;
-
-    if (imageLoop == 8) {
-      imageLoop = 0;
-    } else {
-      imageLoop++;
-    }
+  if (!hero.isDying) {
     if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
         isKeyPressed(' ')) {
-      currentImage = characterLeftJumpArray[5];
+      jumpStart = true;
 
-    } else {
-      currentImage = characterLeftArray[imageLoop];
-    }
-
-    hero.x -= hero.dx;
-    if (hero.x <= 0) {
-      hero.x = 0;
-    }
-  }
-  if (isKeyPressed('s') || isSpecialKeyPressed(GLUT_KEY_DOWN)) {
-    // For debugging only
-    /*
-    if (imageLoop == 14) {
-            imageLoop = 14;
-            hero.isDead = true;
-    }
-    else {
-            imageLoop++;
-    }
-    hero.isDying = true;
-
-    currentImage = characterDieArray[imageLoop];
-    */
-  }
-  if (isKeyPressed('d') || isSpecialKeyPressed(GLUT_KEY_RIGHT)) {
-    isLeft = false;
-    if (imageLoop == 8) {
-      imageLoop = 0;
-    } else {
-      imageLoop++;
-    }
-
-    if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
-        isKeyPressed(' ')) {
-      currentImage = rightjump3;
-
-    } else {
-      currentImage = characterRightArray[imageLoop];
-    }
-
-    hero.x += hero.dx;
-    if (hero.x >= 1030 && *subLevelCount >= 4) {
-      hero.x = 1030;
-    } else if (hero.x >= 1000) {
-      //*subLevelCount++;
-      if (*subLevelCount < 4) {
-        (*subLevelCount)++;
+      if (imageLoop == 9) {
+        imageLoop = 0;
       } else {
-        (*subLevelCount) = 1;
+        imageLoop++;
       }
 
-      levelDefining();
-      hero.x = 0;
-      hero.isDead = false;
-      hero.isDying = false;
-      currentImage = staticChar;
-
-      hero.y = obstacleHeight;
-      imageLoop = 0;
+      if (isLeft) {
+        currentImage = characterLeftJumpArray[5];
+        updatePlayerPhysics(hero, isLeft);
+      } else {
+        currentImage = rightjump3;
+        updatePlayerPhysics(hero, isLeft);
+      }
     }
-  }
+    if (isKeyPressed('a') || isSpecialKeyPressed(GLUT_KEY_LEFT)) {
+      isLeft = true;
+
+      if (imageLoop == 8) {
+        imageLoop = 0;
+      } else {
+        imageLoop++;
+      }
+      if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
+          isKeyPressed(' ')) {
+        currentImage = characterLeftJumpArray[5];
+
+      } else {
+        currentImage = characterLeftArray[imageLoop];
+      }
+
+      hero.x -= hero.dx;
+      if (hero.x <= 0) {
+        hero.x = 0;
+      }
+    }
+    if (isKeyPressed('s') || isSpecialKeyPressed(GLUT_KEY_DOWN)) {
+      // For debugging only
+      /*
+      if (imageLoop == 14) {
+              imageLoop = 14;
+              hero.isDead = true;
+      }
+      else {
+              imageLoop++;
+      }
+      hero.isDying = true;
+
+      currentImage = characterDieArray[imageLoop];
+      */
+    }
+    if (isKeyPressed('d') || isSpecialKeyPressed(GLUT_KEY_RIGHT)) {
+      isLeft = false;
+      if (imageLoop == 8) {
+        imageLoop = 0;
+      } else {
+        imageLoop++;
+      }
+
+      if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
+          isKeyPressed(' ')) {
+        currentImage = rightjump3;
+
+      } else {
+        currentImage = characterRightArray[imageLoop];
+      }
+
+      hero.x += hero.dx;
+      if (hero.x >= 1030 && *subLevelCount >= 4) {
+        hero.x = 1030;
+      } else if (hero.x >= 1000) {
+        //*subLevelCount++;
+        if (*subLevelCount < 4) {
+          (*subLevelCount)++;
+        } else {
+          (*subLevelCount) = 1;
+        }
+
+        levelDefining();
+        hero.x = 0;
+        hero.isDead = false;
+        hero.isDying = false;
+        currentImage = staticChar;
+
+        hero.y = obstacleHeight;
+        imageLoop = 0;
+      }
+    }
+  } // end !hero.isDying input gate
 
   // SPACE stops background music only during gameplay (not during story)
   if (isKeyPressed(' ') && currentGameState == STATE_GAMEPLAY) {
