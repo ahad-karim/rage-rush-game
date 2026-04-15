@@ -141,7 +141,7 @@ void subLevelDefining4() {
 
     objLevel4[noOfObjLevel4++] = {480, 60, 50, 20, 0, 1,
         true, true, true, 15, 0, 450, 60,
-        480, 60, 600, 60};
+        480, 60, 480, 60};
 
     objLevel4[noOfObjLevel4++] = {650, 60, 50, 20, 0, 1,
         true, true, false, 0, 0, 0,
