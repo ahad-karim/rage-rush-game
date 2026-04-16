@@ -90,6 +90,8 @@ void subLevelDefining3() {
 		objLevel3[noOfObjLevel3++] = { 200, 120, 150, 40, 2, 0,
 			true, false, false, 0, 0, 0,
 			0, 200, 120, 200, 120 };
+		objLevel3[noOfObjLevel3++] = { 425, 120, 30, 30, 7, 0, true, false, false, 0, 0, -200, 0, 425, 120, 425, 120 };
+
 		objLevel3[noOfObjLevel3++] = { 500, 120, 150, 40, 2, 0,
 			true, false, false, 0, 0, 0,
 			0, 500, 120, 500, 120 };
@@ -105,6 +107,7 @@ void subLevelDefining3() {
 			true, true, true, 10, 0, 350,
 			0, 350, 60, 450, 60 };
 
+		
 		objLevel3[noOfObjLevel3++] = { 650, 60, 50, 20, 0, 1,
 			true, true, true, 10, 0, 650,
 			0, 650, 60, 750, 60 };
@@ -144,6 +147,7 @@ void subLevelDefining3() {
 		objLevel3[noOfObjLevel3++] = { 600, 120, 150, 40, 2, 0,
 			true, false, false, 0, 0, 0,
 			0, 600, 120, 500, 120 };
+		objLevel3[noOfObjLevel3++] = { 760, 120, 30, 30, 7, 0, true, false, false, 0, 0, -200, 0, 760, 120, 760, 120 };
 		objLevel3[noOfObjLevel3++] = { 800, 120, 150, 40, 2, 0,
 			true, false, false, 0, 0, 0,
 			0, 800, 120, 800, 120 };
@@ -157,9 +161,10 @@ void subLevelDefining3() {
 		objLevel3[noOfObjLevel3++] = { 350, 60, 50, 20, 0, 1,
 			true, true, false, 0, 0, 0,
 			0, 350, 60, 350, 60 };
-		objLevel3[noOfObjLevel3++] = { 550, 60, 50, 20, 0, 1,
+		objLevel3[noOfObjLevel3++] = { 500, 60, 50, 20, 0, 1,
 			true, true, false, 0, 0, 350,
-			0, 550, 160, 850, 160 };
+			0, 500, 60, 500, 60 };
+
 		objLevel3[noOfObjLevel3++] = { 750, 60, 50, 20, 0, 1,
 			true, true, false, 0, 0, 350,
 			0, 750, 160, 850, 160 };

@@ -96,7 +96,10 @@ void subLevelDefining4() {
     // Fake platform
     objLevel4[noOfObjLevel4++] = {800, 60, 120, 50, 4, 0,
         true, false, false, 0, 0, 0,
-        0, 800, 60, 800, 60};
+		0, 800, 60, 800, 60 }; 
+	objLevel4[noOfObjLevel4++] = { 835, 60, 50, 20, 0, 1,
+		true, true, false, 0, 0, 0,
+		0, 835, 60, 835, 60 };
 
     // Spikes between platforms
     objLevel4[noOfObjLevel4++] = {330, 60, 50, 20, 0, 1,
@@ -111,6 +114,10 @@ void subLevelDefining4() {
     objLevel4[noOfObjLevel4++] = {-100, 60, 50, 50, 3, 0,
         true, true, true, 10, 0, 450, 60,
         -100, 60, 1200, 60};
+	objLevel4[noOfObjLevel4++] = { 1300, 120, 50, 50, 3, 0,
+		true, true, true, 10, 0, 400, 120,
+		1300, 120, -100, 120 };
+
   }
   else if (subLevelCount4 == 4) {
     // Sublevel 4: All traps combined + door
@@ -125,12 +132,13 @@ void subLevelDefining4() {
         true, false, false, 0, 0, 0,
         0, 380, 60, 380, 60};
 
-    // Fake platform
-    objLevel4[noOfObjLevel4++] = {560, 60, 80, 50, 4, 0,
+    
+    objLevel4[noOfObjLevel4++] = {560, 60, 80, 50, 2, 0,
         true, false, false, 0, 0, 0,
         0, 560, 60, 560, 60};
-
-    objLevel4[noOfObjLevel4++] = {720, 60, 80, 60, 2, 0,
+	
+	// Fake platform
+    objLevel4[noOfObjLevel4++] = {720, 60, 80, 60, 4, 0,
         true, false, false, 0, 0, 0,
         0, 720, 60, 720, 60};
 
@@ -147,6 +155,9 @@ void subLevelDefining4() {
         true, true, false, 0, 0, 0,
         0, 650, 60, 650, 60};
 
+	objLevel4[noOfObjLevel4++] = { 800, 60, 50, 20, 0, 1,
+		true, true, false, 0, 0, 0,
+		0, 800, 60, 800, 60 };
     // Sawblades
     objLevel4[noOfObjLevel4++] = {-100, 60, 50, 50, 3, 0,
         true, true, true, 10, 0, 200, 60,
