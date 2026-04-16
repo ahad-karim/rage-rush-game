@@ -852,12 +852,26 @@ void iMouse(int button, int state, int mx, int my) {
         currentGameState = STATE_MAIN_MENU;
       }
     } else if (currentGameState == STATE_WIN) {
-      if (levelCount == 6) {
-        currentGameState = STATE_CREDITS;
-      } else {
-        currentGameState = STATE_MAIN_MENU;
-      }
+      // STATE_WIN is only ever reached by finishing Level 5, so always show credits
+      currentGameState = STATE_CREDITS;
     } else if (currentGameState == STATE_CREDITS) {
+      // Reset game state fully before returning to menu
+      hero.isDead = false;
+      hero.isDying = false;
+      currentImage = staticChar;
+      hero.x = 0;
+      hero.y = obstacleHeight;
+      imageLoop = 0;
+      levelDone = false;
+      levelCount = 1;
+      rageDeaths = 0;
+      subLevelCount1 = 1;
+      levelDefining();
+      for (int i = 0; i < noOfObj; i++) {
+        obj[i].x = obj[i].innitialX;
+        obj[i].y = obj[i].innitialY;
+        obj[i].state = 0;
+      }
       currentGameState = STATE_MAIN_MENU;
     } else if (currentGameState == STATE_GAME_OVER) {
       currentGameState = STATE_MAIN_MENU;
@@ -1119,26 +1133,7 @@ void fixedUpdate() {
     colisionDeal(hero);
   }
 
-  if (currentGameState == STATE_WIN) {
-    hero.isDead = false;
-    hero.isDying = false;
-    currentImage = staticChar;
-    hero.x = 0;
-    hero.y = obstacleHeight;
-    imageLoop = 0;
-    levelDone = false;
-    levelCount = 1;
-
-    // Need to be changed for level 2
-    subLevelCount1 = 1;
-    levelDefining();
-
-    for (int i = 0; i < noOfObj; i++) {
-      obj[i].x = obj[i].innitialX;
-      obj[i].y = obj[i].innitialY;
-      obj[i].state = 0; // reset ping-pong direction
-    }
-  }
+  // STATE_WIN is a display-only state. Game reset happens on click (in iMouse).
 
   if (!hero.isDying) {
     if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
