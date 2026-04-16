@@ -5,10 +5,11 @@
 #include "Level.h"
 #include "Physics.h"
 
-#include <mmsystem.h>
 #include <math.h>
+#include <mmsystem.h>
 #include <string>
 #include <time.h>
+
 
 #pragma comment(lib, "winmm.lib")
 
@@ -21,7 +22,7 @@ int imageLoop = 0;
 
 // Debounce array for name input key polling
 bool prevKeyState[256] = {false};
-bool hasSelectedPlayer = false; // Tracks if a player was chosen for 'Continue' 
+bool hasSelectedPlayer = false; // Tracks if a player was chosen for 'Continue'
 bool isLeft = false;
 int doi = 545;
 int screenWidth = glutGet(GLUT_SCREEN_WIDTH);
@@ -166,17 +167,19 @@ void iDraw() {
 
     if (totalPlayers == 0) {
       iSetColor(150, 150, 150);
-      iText(400 * rw, 350 * rh, "No players registered yet.", GLUT_BITMAP_HELVETICA_18);
+      iText(400 * rw, 350 * rh, "No players registered yet.",
+            GLUT_BITMAP_HELVETICA_18);
     } else {
       for (int i = 0; i < displayLimit; i++) {
         // Name
-        iText(200 * rw, startY - (i * gapY), allPlayers[i].name, GLUT_BITMAP_HELVETICA_18);
-        
+        iText(200 * rw, startY - (i * gapY), allPlayers[i].name,
+              GLUT_BITMAP_HELVETICA_18);
+
         // Level
         char lvlStr[10];
         sprintf_s(lvlStr, sizeof(lvlStr), "%d", allPlayers[i].level);
         iText(550 * rw, startY - (i * gapY), lvlStr, GLUT_BITMAP_HELVETICA_18);
-        
+
         // Deaths
         char dthStr[10];
         sprintf_s(dthStr, sizeof(dthStr), "%d", allPlayers[i].deaths);
@@ -186,7 +189,8 @@ void iDraw() {
 
     // 7. Return Instructions
     iSetColor(150, 150, 150);
-    iText(380 * rw, 50 * rh, "Press ESC or BACKSPACE to return", GLUT_BITMAP_HELVETICA_18);
+    iText(380 * rw, 50 * rh, "Press ESC or BACKSPACE to return",
+          GLUT_BITMAP_HELVETICA_18);
   }
 
   // ========== PLAYER SELECTION SCREEN (CONTINUE) ==========
@@ -229,15 +233,17 @@ void iDraw() {
 
     if (totalPlayers == 0) {
       iSetColor(150, 150, 150);
-      iText(400 * rw, 350 * rh, "No players registered yet.", GLUT_BITMAP_HELVETICA_18);
+      iText(400 * rw, 350 * rh, "No players registered yet.",
+            GLUT_BITMAP_HELVETICA_18);
     } else {
       for (int i = 0; i < displayLimit; i++) {
         double currentY = startY - (i * gapY);
-        
+
         // Hover effect for row
-        bool isHovering = (mouseX >= 180 * rw && mouseX <= 900 * rw && 
-                           mouseY >= currentY - 5 * rh && mouseY <= currentY + rowHeight - 5 * rh);
-        
+        bool isHovering = (mouseX >= 180 * rw && mouseX <= 900 * rw &&
+                           mouseY >= currentY - 5 * rh &&
+                           mouseY <= currentY + rowHeight - 5 * rh);
+
         if (isHovering) {
           iSetColor(50, 50, 50); // Highlight background
           iFilledRectangle(180 * rw, currentY - 5 * rh, 720 * rw, rowHeight);
@@ -248,12 +254,12 @@ void iDraw() {
 
         // Name
         iText(200 * rw, currentY, allPlayers[i].name, GLUT_BITMAP_HELVETICA_18);
-        
+
         // Level
         char lvlStr[10];
         sprintf_s(lvlStr, sizeof(lvlStr), "%d", allPlayers[i].level);
         iText(550 * rw, currentY, lvlStr, GLUT_BITMAP_HELVETICA_18);
-        
+
         // Deaths
         char dthStr[10];
         sprintf_s(dthStr, sizeof(dthStr), "%d", allPlayers[i].deaths);
@@ -267,32 +273,26 @@ void iDraw() {
   }
 
   else if (currentGameState == STATE_GAMEPLAY) {
-    
 
     // Draw Header Text (Centered)
-	if (levelCount == 1)
-	{
-		iShowImage(0, 0, screenWidth, screenHeight, l1bg[*subLevelCount - 1]);
-		iText(490 * rw, 550 * rh, "SPIKES", GLUT_BITMAP_HELVETICA_18);
-	}	
-	else if (levelCount == 2) {
-		iShowImage(0, 0, screenWidth, screenHeight, l2bg[*subLevelCount - 1]);
-		iText(480 * rw, 550 * rh, "SAWBLADES", GLUT_BITMAP_HELVETICA_18);
-	}
-      
-	else if (levelCount == 3) {
-		iShowImage(0, 0, screenWidth, screenHeight, l3bg[*subLevelCount - 1]);
-		iText(420 * rw, 550 * rh, "GHOSTS & ILLUSIONS", GLUT_BITMAP_HELVETICA_18);
-	}
-	else if (levelCount == 4) {
-		iShowImage(0, 0, screenWidth, screenHeight, l4bg[*subLevelCount - 1]);
-		iText(470 * rw, 550 * rh, "DARKNESS", GLUT_BITMAP_HELVETICA_18);
-	}
-	else if (levelCount == 5) {
-		iShowImage(0, 0, screenWidth, screenHeight, l5bg[*subLevelCount - 1]);
-		iText(430 * rw, 550 * rh, "MOVING MADNESS", GLUT_BITMAP_HELVETICA_18);
-	}
-      
+    if (levelCount == 1) {
+      iShowImage(0, 0, screenWidth, screenHeight, l1bg[*subLevelCount - 1]);
+      iText(490 * rw, 550 * rh, "SPIKES", GLUT_BITMAP_HELVETICA_18);
+    } else if (levelCount == 2) {
+      iShowImage(0, 0, screenWidth, screenHeight, l2bg[*subLevelCount - 1]);
+      iText(480 * rw, 550 * rh, "SAWBLADES", GLUT_BITMAP_HELVETICA_18);
+    }
+
+    else if (levelCount == 3) {
+      iShowImage(0, 0, screenWidth, screenHeight, l3bg[*subLevelCount - 1]);
+      iText(420 * rw, 550 * rh, "GHOSTS & ILLUSIONS", GLUT_BITMAP_HELVETICA_18);
+    } else if (levelCount == 4) {
+      iShowImage(0, 0, screenWidth, screenHeight, l4bg[*subLevelCount - 1]);
+      iText(470 * rw, 550 * rh, "DARKNESS", GLUT_BITMAP_HELVETICA_18);
+    } else if (levelCount == 5) {
+      iShowImage(0, 0, screenWidth, screenHeight, l5bg[*subLevelCount - 1]);
+      iText(430 * rw, 550 * rh, "MOVING MADNESS", GLUT_BITMAP_HELVETICA_18);
+    }
 
     // Floor Bricks - Use a loop that fills the screen width dynamically
     for (int x = 0; x < screenWidth; x += 100 * rw) {
@@ -309,13 +309,13 @@ void iDraw() {
       if (obj[i].type == 3) {
         iShowImage(obj[i].x * rw, obj[i].y * rh, obj[i].width * rw,
                    obj[i].height * rh, sawbladeArray[sawbladeFrame]);
-	  }
-	  else if (obj[i].type == 5) {
-		  iShowImage((obj[i].x * rw)+5, (obj[i].y * rh)+5, (obj[i].width * rw)-5,
-			  (obj[i].height * rh)-5, objImg[obj[i].type]);
-	  }
-	  
-	  else {
+      } else if (obj[i].type == 5) {
+        iShowImage((obj[i].x * rw) + 5, (obj[i].y * rh) + 5,
+                   (obj[i].width * rw) - 5, (obj[i].height * rh) - 5,
+                   objImg[obj[i].type]);
+      }
+
+      else {
         iShowImage(obj[i].x * rw, obj[i].y * rh, obj[i].width * rw,
                    obj[i].height * rh, objImg[obj[i].type]);
       }
@@ -326,7 +326,8 @@ void iDraw() {
 
     // Shield overlay — drawn on top of hero while active
     if (shieldActive) {
-      iShowImage((hero.x - 5) * rw, (hero.y - 5) * rh, 60 * rw, 60 * rh, shieldImg);
+      iShowImage((hero.x - 5) * rw, (hero.y - 5) * rh, 60 * rw, 60 * rh,
+                 shieldImg);
     }
 
     if (hero.isDead) {
@@ -336,8 +337,8 @@ void iDraw() {
     // ========== DARKNESS OVERLAY (Level 4) ==========
     if (levelCount == 4 && hero.x >= darknessTriggerX) {
       // Player center in screen coordinates
-      double cx = (hero.x + 25) * rw;  // center of 50-wide hero
-      double cy = (hero.y + 25) * rh;  // center of 50-tall hero
+      double cx = (hero.x + 25) * rw; // center of 50-wide hero
+      double cy = (hero.y + 25) * rh; // center of 50-tall hero
       double rad = darknessRadius * rw;
       int segments = 40;
 
@@ -349,7 +350,8 @@ void iDraw() {
       // Step 2: Draw circle into stencil (mark circle area as 1)
       glStencilFunc(GL_ALWAYS, 1, 0xFF);
       glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-      glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE); // Don't draw to color
+      glColorMask(GL_FALSE, GL_FALSE, GL_FALSE,
+                  GL_FALSE); // Don't draw to color
 
       glBegin(GL_TRIANGLE_FAN);
       glVertex2f(cx, cy);
@@ -361,7 +363,8 @@ void iDraw() {
 
       glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // Re-enable color
 
-      // Step 3: Draw semi-transparent black overlay ONLY where stencil != 1 (outside circle)
+      // Step 3: Draw semi-transparent black overlay ONLY where stencil != 1
+      // (outside circle)
       glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
       glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
@@ -386,7 +389,8 @@ void iDraw() {
     double meterX = screenWidth - meterW - 40 * rw;
     double meterY = screenHeight - 50 * rh;
     double fillRatio = (double)rageDeaths / 10.0;
-    if (fillRatio > 1.0) fillRatio = 1.0;
+    if (fillRatio > 1.0)
+      fillRatio = 1.0;
 
     // Background (dark gray)
     iSetColor(40, 40, 40);
@@ -433,28 +437,25 @@ void iDraw() {
 
     // ---- Story text data ----
     // Part 0 text (two lines)
-    static const char* storyLines[3][5] = {
-      {
-        "The world was still bright. I stepped onto the university bus as usual,",
-        "backpack heavy, head full of plans. I didn't even look twice at the driver.",
-        "I just wanted to attend classes as usual.",
-        NULL, NULL
-      },
-      {
-        "Time slowed down. The roar of the train was deafening - a wall of blue and yellow steel",
-        "screaming across the tracks. The bus felt like paper. Shattering glass,",
-        "the smell of burning oil, and a crushing weight.",
-        "That was the last thing I remember.",
-        NULL
-      },
-      {
-        "Cold. That's what woke me up. I wasn't on the bus anymore.",
-        "I wasn't on the tracks. I opened my eyes to a ceiling of rusted pipes and shadows.",
-        "My head throbbed, and the air tasted like copper and old machinery.",
-        "\"Where am I...?\" I'm alive, but I'm not home.",
-        "I don't know this place, but the heavy iron door in front of me is the only way out. It's time to move."
-      }
-    };
+    static const char *storyLines[3][5] = {
+        {"The world was still bright. I stepped onto the university bus as "
+         "usual,",
+         "backpack heavy, head full of plans. I didn't even look twice at the "
+         "driver.",
+         "I just wanted to attend classes as usual.", NULL, NULL},
+        {"Time slowed down. The roar of the train was deafening - a wall of "
+         "blue and yellow steel",
+         "screaming across the tracks. The bus felt like paper. Shattering "
+         "glass,",
+         "the smell of burning oil, and a crushing weight.",
+         "That was the last thing I remember.", NULL},
+        {"Cold. That's what woke me up. I wasn't on the bus anymore.",
+         "I wasn't on the tracks. I opened my eyes to a ceiling of rusted "
+         "pipes and shadows.",
+         "My head throbbed, and the air tasted like copper and old machinery.",
+         "\"Where am I...?\" I'm alive, but I'm not home.",
+         "I don't know this place, but the heavy iron door in front of me is "
+         "the only way out. It's time to move."}};
     static const int storyLineCount[3] = {3, 4, 5};
 
     // Audio durations (seconds) — measured from actual mp3s
@@ -462,14 +463,17 @@ void iDraw() {
 
     // Story images
     static int storyImg[3];
-    storyImg[0] = intro1; storyImg[1] = intro2; storyImg[2] = intro3;
+    storyImg[0] = intro1;
+    storyImg[1] = intro2;
+    storyImg[2] = intro3;
 
     if (storyPhase == 0) {
       // --- Typewriter phase ---
       // Build a single concatenated string from the lines
       char fullText[1024] = "";
       for (int li = 0; li < storyLineCount[storyPart]; li++) {
-        if (li > 0) strcat_s(fullText, sizeof(fullText), "\n");
+        if (li > 0)
+          strcat_s(fullText, sizeof(fullText), "\n");
         strcat_s(fullText, sizeof(fullText), storyLines[storyPart][li]);
       }
       int totalChars = (int)strlen(fullText);
@@ -477,7 +481,8 @@ void iDraw() {
       // Render each line up to storyCharsShown total chars
       int charsLeft = storyCharsShown;
       double lineSpacing = 32 * rh;
-      double startY = screenHeight / 2.0 + (storyLineCount[storyPart] - 1) * lineSpacing / 2.0;
+      double startY = screenHeight / 2.0 +
+                      (storyLineCount[storyPart] - 1) * lineSpacing / 2.0;
 
       iSetColor(220, 220, 220);
       for (int li = 0; li < storyLineCount[storyPart] && charsLeft > 0; li++) {
@@ -505,22 +510,26 @@ void iDraw() {
     } else if (storyPhase == 1) {
       // --- Hold phase: full text stays on screen for 1.5s ---
       double lineSpacing = 32 * rh;
-      double startY = screenHeight / 2.0 + (storyLineCount[storyPart] - 1) * lineSpacing / 2.0;
+      double startY = screenHeight / 2.0 +
+                      (storyLineCount[storyPart] - 1) * lineSpacing / 2.0;
 
       iSetColor(220, 220, 220);
       for (int li = 0; li < storyLineCount[storyPart]; li++) {
-        if (!storyLines[storyPart][li]) break;
+        if (!storyLines[storyPart][li])
+          break;
         int lineLen = (int)strlen(storyLines[storyPart][li]);
         double textWidth = lineLen * 9.0 * rw;
         double lineX = (screenWidth - textWidth) / 2.0;
         iText(lineX, startY - li * lineSpacing,
-              const_cast<char*>(storyLines[storyPart][li]), GLUT_BITMAP_9_BY_15);
+              const_cast<char *>(storyLines[storyPart][li]),
+              GLUT_BITMAP_9_BY_15);
       }
 
     } else {
       // --- Image phase (storyPhase == 2): fade in and hold ---
       double fadeT = storyTimer / 0.5; // 0.5s fade-in
-      if (fadeT > 1.0) fadeT = 1.0;
+      if (fadeT > 1.0)
+        fadeT = 1.0;
 
       iShowImage(0, 0, screenWidth, screenHeight, storyImg[storyPart]);
 
@@ -529,8 +538,10 @@ void iDraw() {
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glColor4f(0.0f, 0.0f, 0.0f, (float)(1.0 - fadeT));
       glBegin(GL_QUADS);
-        glVertex2f(0, 0); glVertex2f(screenWidth, 0);
-        glVertex2f(screenWidth, screenHeight); glVertex2f(0, screenHeight);
+      glVertex2f(0, 0);
+      glVertex2f(screenWidth, 0);
+      glVertex2f(screenWidth, screenHeight);
+      glVertex2f(0, screenHeight);
       glEnd();
       glDisable(GL_BLEND);
       glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -573,19 +584,20 @@ void iDraw() {
     double btnY = 220 * rh;
 
     // Arrays of normal and hovered images in order
-    int levelBtnNormal[5] = { levelBtn1, levelBtn2, levelBtn3, levelBtn4, levelBtn5 };
-    int levelBtnHovered[5] = { levelBtnHov1, levelBtnHov2, levelBtnHov3, levelBtnHov4, levelBtnHov5 };
+    int levelBtnNormal[5] = {levelBtn1, levelBtn2, levelBtn3, levelBtn4,
+                             levelBtn5};
+    int levelBtnHovered[5] = {levelBtnHov1, levelBtnHov2, levelBtnHov3,
+                              levelBtnHov4, levelBtnHov5};
 
     for (int i = 0; i < 5; i++) {
-        double currentX = startX + i * (btnW + gap);
+      double currentX = startX + i * (btnW + gap);
 
-        bool isHovering = (mouseX >= currentX && mouseX <= currentX + btnW &&
-                           mouseY >= btnY && mouseY <= btnY + btnH);
+      bool isHovering = (mouseX >= currentX && mouseX <= currentX + btnW &&
+                         mouseY >= btnY && mouseY <= btnY + btnH);
 
-        int img = isHovering ? levelBtnHovered[i] : levelBtnNormal[i];
-        iShowImage(currentX, btnY, btnW, btnH, img);
+      int img = isHovering ? levelBtnHovered[i] : levelBtnNormal[i];
+      iShowImage(currentX, btnY, btnW, btnH, img);
     }
-
 
     // 5. Back button (text at bottom)
     bool hovBack = (mouseX >= 480 * rw && mouseX <= 600 * rw &&
@@ -730,10 +742,12 @@ void iMouse(int button, int state, int mx, int my) {
       // changing volume (X: 30 to 100, Y: 30 to 100)
       if (mx >= 30 * rw && mx <= 100 * rw && my >= 30 * rh && my <= 100 * rh) {
         vol = !vol;
-        // Volume button: close first to handle any state, then reopen and play/stop
+        // Volume button: close first to handle any state, then reopen and
+        // play/stop
         mciSendString("stop bgsong", NULL, 0, NULL);
         mciSendString("close bgsong", NULL, 0, NULL);
-        mciSendString("open \"Audios//RageRush_bgm.mp3\" alias bgsong", NULL, 0, NULL);
+        mciSendString("open \"Audios//RageRush_bgm.mp3\" alias bgsong", NULL, 0,
+                      NULL);
         if (vol) {
           mciSendString("play bgsong repeat", NULL, 0, NULL);
         }
@@ -758,19 +772,23 @@ void iMouse(int button, int state, int mx, int my) {
           if (my >= currentY - 5 * rh && my <= currentY + rowHeight - 5 * rh) {
             // Player Selected!
             currentPlayerIndex = i;
-            
+
             // Load their saved stats
             levelCount = allPlayers[i].level;
             rageDeaths = allPlayers[i].deaths;
-            
+
             // Ensure they start at sublevel 1 of their saved level
-            if (levelCount == 1) subLevelCount1 = 1;
-            else if (levelCount == 2) subLevelCount2 = 1;
-            else if (levelCount == 3) subLevelCount3 = 1;
-            else if (levelCount == 4) subLevelCount4 = 1;
+            if (levelCount == 1)
+              subLevelCount1 = 1;
+            else if (levelCount == 2)
+              subLevelCount2 = 1;
+            else if (levelCount == 3)
+              subLevelCount3 = 1;
+            else if (levelCount == 4)
+              subLevelCount4 = 1;
 
             hasSelectedPlayer = true;
-            
+
             // Initialize Gameplay
             levelDefining();
             hero.isDead = false;
@@ -799,29 +817,35 @@ void iMouse(int button, int state, int mx, int my) {
       double totalW = 5 * btnW + 4 * gap;
       double startX = (screenWidth - totalW) / 2.0;
       double btnY = 220 * rh;
-      
+
       bool levelClicked = false;
       int clickedLevel = 0;
 
       for (int i = 0; i < 5; i++) {
         double currentX = startX + i * (btnW + gap);
-        if (mx >= currentX && mx <= currentX + btnW && my >= btnY && my <= btnY + btnH) {
-            levelClicked = true;
-            clickedLevel = i + 1;
-            break;
+        if (mx >= currentX && mx <= currentX + btnW && my >= btnY &&
+            my <= btnY + btnH) {
+          levelClicked = true;
+          clickedLevel = i + 1;
+          break;
         }
       }
 
       if (levelClicked) {
         levelCount = clickedLevel;
         rageDeaths = 0;
-        
-        if (levelCount == 1) subLevelCount1 = 1;
-        else if (levelCount == 2) subLevelCount2 = 1;
-        else if (levelCount == 3) subLevelCount3 = 1;
-        else if (levelCount == 4) subLevelCount4 = 1;
-        else if (levelCount == 5) subLevelCount5 = 1;
-        
+
+        if (levelCount == 1)
+          subLevelCount1 = 1;
+        else if (levelCount == 2)
+          subLevelCount2 = 1;
+        else if (levelCount == 3)
+          subLevelCount3 = 1;
+        else if (levelCount == 4)
+          subLevelCount4 = 1;
+        else if (levelCount == 5)
+          subLevelCount5 = 1;
+
         levelDone = false;
         levelDefining();
         hero.isDead = false;
@@ -848,11 +872,13 @@ void iMouse(int button, int state, int mx, int my) {
       double backH = 40 * rh;
       double backX = 15 * rw;
       double backY = screenHeight - backH - 15 * rh;
-      if (mx >= backX && mx <= backX + backW && my >= backY && my <= backY + backH) {
+      if (mx >= backX && mx <= backX + backW && my >= backY &&
+          my <= backY + backH) {
         currentGameState = STATE_MAIN_MENU;
       }
     } else if (currentGameState == STATE_WIN) {
-      // STATE_WIN is only ever reached by finishing Level 5, so always show credits
+      // STATE_WIN is only ever reached by finishing Level 5, so always show
+      // credits
       currentGameState = STATE_CREDITS;
     } else if (currentGameState == STATE_CREDITS) {
       // Reset game state fully before returning to menu
@@ -901,9 +927,11 @@ void fixedUpdate() {
       if (nameIndex > 0) {
         registerNewPlayer(inputName);
 
-        // Stop background music (keep the device open so the manager can seek+replay it later)
+        // Stop background music (keep the device open so the manager can
+        // seek+replay it later)
         mciSendString("stop bgsong", NULL, 0, NULL);
-        // Reset the audio manager's tracking so it always re-evaluates on next fire
+        // Reset the audio manager's tracking so it always re-evaluates on next
+        // fire
         currentStoryAudioState = -1;
 
         // Launch story
@@ -973,7 +1001,8 @@ void fixedUpdate() {
   // ========== SCOREBOARD NAVIGATION ==========
   if (currentGameState == STATE_SCOREBOARD) {
     // Esc (27) or Backspace (8) to return
-    if ((isKeyPressed(27) && !prevKeyState[27]) || (isKeyPressed(8) && !prevKeyState[8])) {
+    if ((isKeyPressed(27) && !prevKeyState[27]) ||
+        (isKeyPressed(8) && !prevKeyState[8])) {
       currentGameState = STATE_MAIN_MENU;
     }
     prevKeyState[27] = isKeyPressed(27);
@@ -1005,33 +1034,31 @@ void fixedUpdate() {
     static const double storyDuration[3] = {14.636, 18.162, 27.331};
     static const int storyLineCount[3] = {3, 4, 5};
 
-    static const char* storyLines[3][5] = {
-      {
-        "The world was still bright. I stepped onto the university bus as usual,",
-        "backpack heavy, head full of plans. I didn't even look twice at the driver.",
-        "I just wanted to attend classes as usual.",
-        NULL, NULL
-      },
-      {
-        "Time slowed down. The roar of the train was deafening - a wall of blue and yellow steel",
-        "screaming across the tracks. The bus felt like paper. Shattering glass,",
-        "the smell of burning oil, and a crushing weight.",
-        "That was the last thing I remember.",
-        NULL
-      },
-      {
-        "Cold. That's what woke me up. I wasn't on the bus anymore.",
-        "I wasn't on the tracks. I opened my eyes to a ceiling of rusted pipes and shadows.",
-        "My head throbbed, and the air tasted like copper and old machinery.",
-        "\"Where am I...?\" I'm alive, but I'm not home.",
-        "I don't know this place, but the heavy iron door in front of me is the only way out. It's time to move."
-      }
-    };
+    static const char *storyLines[3][5] = {
+        {"The world was still bright. I stepped onto the university bus as "
+         "usual,",
+         "backpack heavy, head full of plans. I didn't even look twice at the "
+         "driver.",
+         "I just wanted to attend classes as usual.", NULL, NULL},
+        {"Time slowed down. The roar of the train was deafening - a wall of "
+         "blue and yellow steel",
+         "screaming across the tracks. The bus felt like paper. Shattering "
+         "glass,",
+         "the smell of burning oil, and a crushing weight.",
+         "That was the last thing I remember.", NULL},
+        {"Cold. That's what woke me up. I wasn't on the bus anymore.",
+         "I wasn't on the tracks. I opened my eyes to a ceiling of rusted "
+         "pipes and shadows.",
+         "My head throbbed, and the air tasted like copper and old machinery.",
+         "\"Where am I...?\" I'm alive, but I'm not home.",
+         "I don't know this place, but the heavy iron door in front of me is "
+         "the only way out. It's time to move."}};
 
     // Compute total character count for this part
     int totalChars = 0;
     for (int li = 0; li < storyLineCount[storyPart]; li++) {
-      if (storyLines[storyPart][li]) totalChars += (int)strlen(storyLines[storyPart][li]);
+      if (storyLines[storyPart][li])
+        totalChars += (int)strlen(storyLines[storyPart][li]);
     }
 
     // Delta time
@@ -1041,19 +1068,21 @@ void fixedUpdate() {
     storyTimer += dt;
 
     // SPACE key skips the current phase
-    bool spaceJustPressed = isKeyPressed(' ') && !prevKeyState[(unsigned char)' '];
+    bool spaceJustPressed =
+        isKeyPressed(' ') && !prevKeyState[(unsigned char)' '];
     prevKeyState[(unsigned char)' '] = isKeyPressed(' ');
 
     if (storyPhase == 0) {
       // --- Typewriter phase ---
       double ratio = storyTimer / storyDuration[storyPart];
-      if (ratio > 1.0) ratio = 1.0;
+      if (ratio > 1.0)
+        ratio = 1.0;
       storyCharsShown = (int)(ratio * totalChars);
 
       // Phase ends when audio duration elapsed (or SPACE)
       if (storyTimer >= storyDuration[storyPart] || spaceJustPressed) {
         storyCharsShown = totalChars;
-        storyPhase = 1;       // enter 1.5s text-hold phase
+        storyPhase = 1; // enter 1.5s text-hold phase
         storyTimer = 0.0;
         // Signal audio manager: silence while text is held
         storyAudioAction = 4;
@@ -1063,7 +1092,7 @@ void fixedUpdate() {
     } else if (storyPhase == 1) {
       // --- Text hold phase: full text stays visible for 1.5s ---
       if (storyTimer >= 1.5 || spaceJustPressed) {
-        storyPhase = 2;       // enter image phase
+        storyPhase = 2; // enter image phase
         storyTimer = 0.0;
       }
 
@@ -1106,7 +1135,6 @@ void fixedUpdate() {
       }
     }
   }
-
 
   if (currentGameState == STATE_GAMEPLAY) {
 
@@ -1262,9 +1290,12 @@ void fixedUpdate() {
     if (rageDeaths >= RAGE_MAX) {
       // Rage meter full — reset to sublevel 1 of current level
       rageDeaths = 0;
-      if (levelCount == 1) subLevelCount1 = 1;
-      else if (levelCount == 2) subLevelCount2 = 1;
-      else if (levelCount == 3) subLevelCount3 = 1;
+      if (levelCount == 1)
+        subLevelCount1 = 1;
+      else if (levelCount == 2)
+        subLevelCount2 = 1;
+      else if (levelCount == 3)
+        subLevelCount3 = 1;
       levelDefining();
     }
 
@@ -1286,7 +1317,13 @@ void fixedUpdate() {
   double groundLevel = onPlatform ? platformTopY : (double)obstacleHeight;
 
   // 1. Detect walking off edges
-  if (hero.y > groundLevel + 1) { // Small buffer to avoid jitter
+  if (hero.y > groundLevel + 1) {
+    if (hero.isGrounded) {
+      // Character just walked off a platform/ground edge (no jump initiated).
+      // hero.dy is 15 from the landing reset, which would push them upward.
+      // Clamp to 0 so gravity immediately pulls them straight down.
+      if (hero.dy > 0) hero.dy = 0;
+    }
     hero.isGrounded = false;
   }
 
@@ -1297,8 +1334,10 @@ void fixedUpdate() {
       hero.dy += gravity;
       hero.y += hero.dy;
     }
-    // Only reset animation if truly in air (prevents freeze on platforms)
-    imageLoop = 0;
+    // Only reset animation if truly in air and NOT playing death animation
+    if (!hero.isDying) {
+      imageLoop = 0;
+    }
   }
 
   // 3. Ground Landing
@@ -1314,12 +1353,12 @@ void fixedUpdate() {
     // Reset to idle image whenever grounded and no movement/jump key is held.
     // This must run every frame (not just on first landing) so that releasing
     // the jump key after a platform landing immediately shows the static pose.
-    bool anyKey = isKeyPressed('a') || isKeyPressed('d') ||
-                  isKeyPressed('w') || isKeyPressed(' ') ||
-                  isSpecialKeyPressed(GLUT_KEY_LEFT) ||
+    bool anyKey = isKeyPressed('a') || isKeyPressed('d') || isKeyPressed('w') ||
+                  isKeyPressed(' ') || isSpecialKeyPressed(GLUT_KEY_LEFT) ||
                   isSpecialKeyPressed(GLUT_KEY_RIGHT) ||
                   isSpecialKeyPressed(GLUT_KEY_UP);
-    if (!anyKey) {
+    // Reset to idle image whenever grounded, no key held, and NOT dying.
+    if (!anyKey && !hero.isDying) {
       currentImage = staticChar;
       imageLoop = 0;
     }
@@ -1343,11 +1382,13 @@ void changeSawbladeFrame() {
 
 // ========== STORY AUDIO MANAGER (runs on its own WM_TIMER) ==========
 // Reads the global storyAudioAction flag and performs MCI operations.
-// Actions: 0=idle/gameplay (bgsong), 1=play story1, 2=play story2, 3=play story3, 4=silence
-// Uses a close/open guard for bgsong so it always works regardless of prior state.
+// Actions: 0=idle/gameplay (bgsong), 1=play story1, 2=play story2, 3=play
+// story3, 4=silence Uses a close/open guard for bgsong so it always works
+// regardless of prior state.
 
 void storyAudioManager() {
-  if (currentStoryAudioState == storyAudioAction) return;
+  if (currentStoryAudioState == storyAudioAction)
+    return;
 
   // Stop all story tracks — these are always open so this is safe
   mciSendString("stop story1", NULL, 0, NULL);
@@ -1359,9 +1400,11 @@ void storyAudioManager() {
   }
 
   if (storyAudioAction == 0) {
-    // Returning to gameplay: reopen bgsong (close first in case it is still open)
+    // Returning to gameplay: reopen bgsong (close first in case it is still
+    // open)
     mciSendString("close bgsong", NULL, 0, NULL);
-    mciSendString("open \"Audios//RageRush_bgm.mp3\" alias bgsong", NULL, 0, NULL);
+    mciSendString("open \"Audios//RageRush_bgm.mp3\" alias bgsong", NULL, 0,
+                  NULL);
     if (vol) {
       mciSendString("play bgsong repeat", NULL, 0, NULL);
     }
@@ -1384,10 +1427,14 @@ void storyAudioManager() {
 int main() {
 
   // Opening/Loading all the audio devices in main
-  mciSendString("open \"Audios//RageRush_bgm.mp3\" alias bgsong", NULL, 0, NULL);
-  mciSendString("open \"Audios//first_part_story.mp3\" alias story1", NULL, 0, NULL);
-  mciSendString("open \"Audios//second_part_story.mp3\" alias story2", NULL, 0, NULL);
-  mciSendString("open \"Audios//third_part_story.mp3\" alias story3", NULL, 0, NULL);
+  mciSendString("open \"Audios//RageRush_bgm.mp3\" alias bgsong", NULL, 0,
+                NULL);
+  mciSendString("open \"Audios//first_part_story.mp3\" alias story1", NULL, 0,
+                NULL);
+  mciSendString("open \"Audios//second_part_story.mp3\" alias story2", NULL, 0,
+                NULL);
+  mciSendString("open \"Audios//third_part_story.mp3\" alias story3", NULL, 0,
+                NULL);
 
   storyAudioAction = 0; // Starts by playing BGM if vol acts
 
@@ -1400,7 +1447,7 @@ int main() {
   levelDefining();
 
   iSetTimer(30, changeSawbladeFrame);
-  iSetTimer(50, storyAudioManager);  // Poll for audio state changes
+  iSetTimer(50, storyAudioManager); // Poll for audio state changes
 
   iStart();
   return 0;

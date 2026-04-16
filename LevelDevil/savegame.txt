@@ -1,5 +1,5 @@
 nigga 6 2
-test2 6 8
+test2 6 9
 fheiheifh 2 5
 test3 5 1
 sss 1 1
@@ -7,7 +7,7 @@ kk 2 14
 ff 3 21
 kk 6 3
 kk 1 0
-alooooo 1 0
+alooooo 1 3
 test99 1 0
 hh 1 0
 ttttt 1 0
@@ -23,3 +23,6 @@ gegega 1 0
 fiowf 1 0
 ugiih 1 0
 hh 6 0
+heifhiw 1 2
+c1c1 1 1
+ahad 1 2
