@@ -39,3 +39,11 @@ obj/
 
 ## Test Results
 TestResults/
+
+## Allow specific library files in LevelDevil
+!LevelDevil/glaux.h
+!LevelDevil/GLU32.LIB
+!LevelDevil/GLUT32.DLL
+!LevelDevil/Glaux.lib
+!LevelDevil/glut32.lib
+!LevelDevil/glui32.lib

@@ -24,8 +24,10 @@ int l3bg[4];
 int l4bg[4];
 int l5bg[4];
 int orbImg, shieldImg;
-int intro1, intro2, intro3, intro4; // Story / win images
+int intro1, intro2, intro3, intro4, credits; // Story / win images
 int backDefault, backHovered;        // Back button (in-game)
+int levelBtn1, levelBtn2, levelBtn3, levelBtn4, levelBtn5;           // Level select buttons
+int levelBtnHov1, levelBtnHov2, levelBtnHov3, levelBtnHov4, levelBtnHov5; // Hovered state
 
 int objImg[8] = {
     spikes1,  door,     platform,
@@ -66,12 +68,25 @@ void initImages() {
   intro2 = iLoadImage("Images//intro2.png");
   intro3 = iLoadImage("Images//intro3.png");
   intro4 = iLoadImage("Images//intro4.png");
+  credits = iLoadImage("Images//Credit.png");
 
   win = iLoadImage("Images//win.png");
   gameover = iLoadImage("Images//gameover.jpg");
 
   backDefault = iLoadImage("Images//backDefault.png");
   backHovered = iLoadImage("Images//backHovered.png");
+
+  // Level select button images
+  levelBtn1    = iLoadImage("Images//level1.png");
+  levelBtn2    = iLoadImage("Images//level2.png");
+  levelBtn3    = iLoadImage("Images//level3.png");
+  levelBtn4    = iLoadImage("Images//Level4.png");
+  levelBtn5    = iLoadImage("Images//Level5.png");
+  levelBtnHov1 = iLoadImage("Images//Level1Hovered.png");
+  levelBtnHov2 = iLoadImage("Images//Level2Hovered.png");
+  levelBtnHov3 = iLoadImage("Images//Level3Hovered.png");
+  levelBtnHov4 = iLoadImage("Images//Level4Hovered.png");
+  levelBtnHov5 = iLoadImage("Images//Level5Hovered.png");
 
   l1bg[0] = iLoadImage("Images//l1s1bg.png");
   l1bg[1] = iLoadImage("Images//l1s2bg.png");
