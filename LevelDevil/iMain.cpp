@@ -1308,6 +1308,18 @@ void fixedUpdate() {
 
     if (!hero.isGrounded) {
       hero.isGrounded = true;
+      imageLoop = 0;
+    }
+
+    // Reset to idle image whenever grounded and no movement/jump key is held.
+    // This must run every frame (not just on first landing) so that releasing
+    // the jump key after a platform landing immediately shows the static pose.
+    bool anyKey = isKeyPressed('a') || isKeyPressed('d') ||
+                  isKeyPressed('w') || isKeyPressed(' ') ||
+                  isSpecialKeyPressed(GLUT_KEY_LEFT) ||
+                  isSpecialKeyPressed(GLUT_KEY_RIGHT) ||
+                  isSpecialKeyPressed(GLUT_KEY_UP);
+    if (!anyKey) {
       currentImage = staticChar;
       imageLoop = 0;
     }
