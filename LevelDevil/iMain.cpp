@@ -825,7 +825,7 @@ void iMouse(int button, int state, int mx, int my) {
         else if (levelCount == 2) subLevelCount2 = 1;
         else if (levelCount == 3) subLevelCount3 = 1;
         else if (levelCount == 4) subLevelCount4 = 1;
-        else if (levelCount == 5) subLevelCount5 = 1;
+        else if (levelCount == 5) subLevelCount5 = 4;
         
         levelDone = false;
         levelDefining();
