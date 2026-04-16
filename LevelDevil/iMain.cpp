@@ -419,6 +419,8 @@ void iDraw() {
   // ... WIN and GAME_OVER states ...
   else if (currentGameState == STATE_WIN) {
     iShowImage(0, 0, screenWidth, screenHeight, intro4);
+  } else if (currentGameState == STATE_CREDITS) {
+    iShowImage(0, 0, screenWidth, screenHeight, credits);
   } else if (currentGameState == STATE_GAME_OVER) {
     iShowImage(0, 0, screenWidth, screenHeight, gameover);
   }
@@ -562,36 +564,28 @@ void iDraw() {
     iText(410 * rw, 500 * rh, "SELECT LEVEL", GLUT_BITMAP_TIMES_ROMAN_24);
     iSetColor(255, 255, 255);
 
-    // 4. Level buttons (centered row)
-    double btnSize = 130 * rw;
-    double gap = 30 * rw;
-    double totalW = 5 * btnSize + 4 * gap;
+    // 4. Level buttons (centered row) — image-based
+    double btnW = 160 * rw;
+    double btnH = 160 * rh;
+    double gap = 20 * rw;
+    double totalW = 5 * btnW + 4 * gap;
     double startX = (screenWidth - totalW) / 2.0;
-    double btnY = 250 * rh;
+    double btnY = 220 * rh;
 
-    for (int i = 1; i <= 5; i++) {
-        double currentX = startX + (i - 1) * (btnSize + gap);
-        
-        bool isHovering = (mouseX >= currentX && mouseX <= currentX + btnSize &&
-                           mouseY >= btnY && mouseY <= btnY + btnSize);
+    // Arrays of normal and hovered images in order
+    int levelBtnNormal[5] = { levelBtn1, levelBtn2, levelBtn3, levelBtn4, levelBtn5 };
+    int levelBtnHovered[5] = { levelBtnHov1, levelBtnHov2, levelBtnHov3, levelBtnHov4, levelBtnHov5 };
 
-        if (isHovering) {
-            iSetColor(50, 50, 50); // Dark gray hover background
-            iFilledRectangle(currentX, btnY, btnSize, btnSize);
-            iSetColor(255, 255, 100); // Yellow border and text
-            iRectangle(currentX, btnY, btnSize, btnSize);
-        } else {
-            iSetColor(30, 30, 30); // Very dark gray normal background
-            iFilledRectangle(currentX, btnY, btnSize, btnSize);
-            iSetColor(150, 150, 150); // Gray border and text
-            iRectangle(currentX, btnY, btnSize, btnSize);
-        }
+    for (int i = 0; i < 5; i++) {
+        double currentX = startX + i * (btnW + gap);
 
-        char lvlStr[20];
-        sprintf_s(lvlStr, sizeof(lvlStr), "LEVEL %d", i);
-        // Center text roughly
-        iText(currentX + 30 * rw, btnY + 55 * rh, lvlStr, GLUT_BITMAP_HELVETICA_18);
+        bool isHovering = (mouseX >= currentX && mouseX <= currentX + btnW &&
+                           mouseY >= btnY && mouseY <= btnY + btnH);
+
+        int img = isHovering ? levelBtnHovered[i] : levelBtnNormal[i];
+        iShowImage(currentX, btnY, btnW, btnH, img);
     }
+
 
     // 5. Back button (text at bottom)
     bool hovBack = (mouseX >= 480 * rw && mouseX <= 600 * rw &&
@@ -799,20 +793,21 @@ void iMouse(int button, int state, int mx, int my) {
     }
     // ========== LEVEL SELECT CLICK HANDLING ==========
     else if (currentGameState == STATE_LEVEL_SELECT) {
-      double btnSize = 130 * rw;
-      double gap = 30 * rw;
-      double totalW = 5 * btnSize + 4 * gap;
+      double btnW = 160 * rw;
+      double btnH = 160 * rh;
+      double gap = 20 * rw;
+      double totalW = 5 * btnW + 4 * gap;
       double startX = (screenWidth - totalW) / 2.0;
-      double btnY = 250 * rh;
+      double btnY = 220 * rh;
       
       bool levelClicked = false;
       int clickedLevel = 0;
 
-      for (int i = 1; i <= 5; i++) {
-        double currentX = startX + (i - 1) * (btnSize + gap);
-        if (mx >= currentX && mx <= currentX + btnSize && my >= btnY && my <= btnY + btnSize) {
+      for (int i = 0; i < 5; i++) {
+        double currentX = startX + i * (btnW + gap);
+        if (mx >= currentX && mx <= currentX + btnW && my >= btnY && my <= btnY + btnH) {
             levelClicked = true;
-            clickedLevel = i;
+            clickedLevel = i + 1;
             break;
         }
       }
@@ -857,6 +852,26 @@ void iMouse(int button, int state, int mx, int my) {
         currentGameState = STATE_MAIN_MENU;
       }
     } else if (currentGameState == STATE_WIN) {
+      // STATE_WIN is only ever reached by finishing Level 5, so always show credits
+      currentGameState = STATE_CREDITS;
+    } else if (currentGameState == STATE_CREDITS) {
+      // Reset game state fully before returning to menu
+      hero.isDead = false;
+      hero.isDying = false;
+      currentImage = staticChar;
+      hero.x = 0;
+      hero.y = obstacleHeight;
+      imageLoop = 0;
+      levelDone = false;
+      levelCount = 1;
+      rageDeaths = 0;
+      subLevelCount1 = 1;
+      levelDefining();
+      for (int i = 0; i < noOfObj; i++) {
+        obj[i].x = obj[i].innitialX;
+        obj[i].y = obj[i].innitialY;
+        obj[i].state = 0;
+      }
       currentGameState = STATE_MAIN_MENU;
     } else if (currentGameState == STATE_GAME_OVER) {
       currentGameState = STATE_MAIN_MENU;
@@ -968,6 +983,15 @@ void fixedUpdate() {
   // ========== PLAYER SELECTION NAVIGATION ==========
   if (currentGameState == STATE_CONTINUE) {
     // Esc to cancel and return to menu
+    if (isKeyPressed(27) && !prevKeyState[27]) {
+      currentGameState = STATE_MAIN_MENU;
+    }
+    prevKeyState[27] = isKeyPressed(27);
+  }
+
+  // ========== CREDITS NAVIGATION ==========
+  if (currentGameState == STATE_CREDITS) {
+    // Esc to return to menu
     if (isKeyPressed(27) && !prevKeyState[27]) {
       currentGameState = STATE_MAIN_MENU;
     }
@@ -1109,26 +1133,7 @@ void fixedUpdate() {
     colisionDeal(hero);
   }
 
-  if (currentGameState == STATE_WIN) {
-    hero.isDead = false;
-    hero.isDying = false;
-    currentImage = staticChar;
-    hero.x = 0;
-    hero.y = obstacleHeight;
-    imageLoop = 0;
-    levelDone = false;
-    levelCount = 1;
-
-    // Need to be changed for level 2
-    subLevelCount1 = 1;
-    levelDefining();
-
-    for (int i = 0; i < noOfObj; i++) {
-      obj[i].x = obj[i].innitialX;
-      obj[i].y = obj[i].innitialY;
-      obj[i].state = 0; // reset ping-pong direction
-    }
-  }
+  // STATE_WIN is a display-only state. Game reset happens on click (in iMouse).
 
   if (!hero.isDying) {
     if (isKeyPressed('w') || isSpecialKeyPressed(GLUT_KEY_UP) ||
@@ -1303,6 +1308,18 @@ void fixedUpdate() {
 
     if (!hero.isGrounded) {
       hero.isGrounded = true;
+      imageLoop = 0;
+    }
+
+    // Reset to idle image whenever grounded and no movement/jump key is held.
+    // This must run every frame (not just on first landing) so that releasing
+    // the jump key after a platform landing immediately shows the static pose.
+    bool anyKey = isKeyPressed('a') || isKeyPressed('d') ||
+                  isKeyPressed('w') || isKeyPressed(' ') ||
+                  isSpecialKeyPressed(GLUT_KEY_LEFT) ||
+                  isSpecialKeyPressed(GLUT_KEY_RIGHT) ||
+                  isSpecialKeyPressed(GLUT_KEY_UP);
+    if (!anyKey) {
       currentImage = staticChar;
       imageLoop = 0;
     }
